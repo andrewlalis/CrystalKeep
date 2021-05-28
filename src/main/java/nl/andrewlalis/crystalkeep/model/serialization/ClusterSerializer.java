@@ -19,6 +19,10 @@ import java.util.Map;
 
 import static nl.andrewlalis.crystalkeep.model.serialization.ByteUtils.toInt;
 
+/**
+ * This serializer class offers some methods for reading and writing clusters
+ * from and to byte arrays.
+ */
 public class ClusterSerializer {
 	private static final Map<ShardType, ShardSerializer<?>> serializers = new HashMap<>();
 	static {
@@ -29,6 +33,7 @@ public class ClusterSerializer {
 	/**
 	 * Serializes a cluster to a byte array, including all shards and nested
 	 * clusters.
+	 * TODO: Use output stream instead of byte array.
 	 * @param cluster The cluster to serialize.
 	 * @return The byte array representing the cluster.
 	 * @throws IOException If an error occurs while writing the cluster.
