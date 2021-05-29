@@ -38,8 +38,16 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 		this.shards.add(shard);
 	}
 
+	public void removeShard(Shard shard) {
+		this.shards.remove(shard);
+	}
+
 	public void addCluster(Cluster cluster) {
 		this.clusters.add(cluster);
+	}
+
+	public void removeCluster(Cluster cluster) {
+		this.clusters.remove(cluster);
 	}
 
 	public List<Cluster> getClustersOrdered() {

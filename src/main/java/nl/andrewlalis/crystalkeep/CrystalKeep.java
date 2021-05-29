@@ -29,7 +29,15 @@ public class CrystalKeep extends Application {
 		stage.setScene(scene);
 		stage.setTitle("CrystalKeep");
 		stage.sizeToScene();
+		model.setActiveCluster(this.loadRootCluster());
 
+		stage.show();
+
+		MainViewController controller = loader.getController();
+		controller.init(model);
+	}
+
+	private Cluster loadRootCluster() throws IOException {
 		ClusterLoader clusterLoader = new ClusterLoader();
 		Cluster rootCluster;
 		try {
@@ -45,12 +53,6 @@ public class CrystalKeep extends Application {
 			clusterLoader.saveDefault(rootCluster);
 			System.out.println("Saved root cluster on first load.");
 		}
-		model.setActiveCluster(rootCluster);
-
-		stage.show();
-
-		MainViewController controller = loader.getController();
-		controller.init(model);
-		System.out.println(rootCluster);
+		return rootCluster;
 	}
 }

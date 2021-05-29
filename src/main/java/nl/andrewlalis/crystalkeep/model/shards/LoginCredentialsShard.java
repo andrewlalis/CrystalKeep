@@ -1,6 +1,7 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
 import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.ShardType;
 import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
 
@@ -37,6 +38,11 @@ public class LoginCredentialsShard extends Shard {
 	@Override
 	public String toString() {
 		return super.toString() + ", username=\"" + this.username + "\", password=\"" + this.password + "\"";
+	}
+
+	@Override
+	public String getIconPath() {
+		return "/nl/andrewlalis/crystalkeep/ui/images/login_credentials_shard_node_icon.png";
 	}
 
 	public static class Serializer implements ShardSerializer<LoginCredentialsShard> {

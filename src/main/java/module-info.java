@@ -5,4 +5,5 @@ module crystalkeep {
 	opens nl.andrewlalis.crystalkeep;
 
 	exports nl.andrewlalis.crystalkeep.control to javafx.fxml;
+	exports nl.andrewlalis.crystalkeep.model to javafx.fxml;
 }

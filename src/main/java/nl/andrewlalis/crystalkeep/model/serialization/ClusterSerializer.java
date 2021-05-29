@@ -3,7 +3,7 @@ package nl.andrewlalis.crystalkeep.model.serialization;
 import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
-import nl.andrewlalis.crystalkeep.model.shards.ShardType;
+import nl.andrewlalis.crystalkeep.model.ShardType;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
 import java.io.IOException;
@@ -12,7 +12,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

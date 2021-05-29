@@ -19,6 +19,10 @@ public class Model {
 
 	public void setActiveCluster(Cluster activeCluster) {
 		this.activeCluster = activeCluster;
+		this.notifyListeners();
+	}
+
+	public void notifyListeners() {
 		this.listeners.forEach(ModelListener::activeClusterUpdated);
 	}
 }

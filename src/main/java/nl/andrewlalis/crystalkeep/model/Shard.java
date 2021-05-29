@@ -1,14 +1,11 @@
 package nl.andrewlalis.crystalkeep.model;
 
-import nl.andrewlalis.crystalkeep.model.shards.ShardType;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  * A shard is a single "piece" of information, such as a snippet of text, login
- * credentials, an image, or a private key. All shards within a cluster should
- * have unique names.
+ * credentials, an image, or a private key.
  * <p>
  *     Due to the need to deserialize shards from byte arrays, it is required
  *     that this parent class holds a type discriminator value, which is used to
@@ -55,7 +52,7 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Shard shard = (Shard) o;
-		return getName().equals(shard.getName()) && getType() == shard.getType();
+		return getName().equals(shard.getName()) && getType() == shard.getType() && getCreatedAt().equals(shard.getCreatedAt());
 	}
 
 	@Override

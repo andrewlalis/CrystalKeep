@@ -1,6 +1,7 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
 import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.ShardType;
 import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
 
@@ -27,6 +28,11 @@ public class TextShard extends Shard {
 	@Override
 	public String toString() {
 		return super.toString() + ", text=\"" + this.text + "\"";
+	}
+
+	@Override
+	public String getIconPath() {
+		return "/nl/andrewlalis/crystalkeep/ui/images/text_shard_node_icon.png";
 	}
 
 	public static class Serializer implements ShardSerializer<TextShard> {

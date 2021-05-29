@@ -1,6 +1,7 @@
-package nl.andrewlalis.crystalkeep.model.shards;
+package nl.andrewlalis.crystalkeep.model;
 
-import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
+import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
 /**
  * Represents a distinct type of shard, and should correspond to exactly one
