@@ -29,7 +29,6 @@ public class CrystalKeep extends Application {
 		URL url = CrystalKeep.class.getClassLoader().getResource("ui/crystalkeep.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 		Model model = new Model();
-		loader.setController(new MainViewController(model));
 		var scene = new Scene(loader.load());
 		stage.setScene(scene);
 		stage.setTitle("CrystalKeep");
@@ -43,14 +42,20 @@ public class CrystalKeep extends Application {
 		} catch (IOException e) {
 			rootCluster = new Cluster("Root");
 			rootCluster.addShard(new TextShard(rootCluster, "Example Shard", LocalDateTime.now(), "Hello world!"));
+			rootCluster.addShard(new LoginCredentialsShard(rootCluster, "Netflix", LocalDateTime.now(), "user", "secret password"));
+			for (int i = 0; i < 100; i++) {
+				rootCluster.addShard(new TextShard(rootCluster, "test " + i, LocalDateTime.now(), "value: " + i));
+			}
 			clusterLoader.saveDefault(rootCluster);
 			System.out.println("Saved root cluster on first load.");
 		}
-
 		model.setActiveCluster(rootCluster);
-		System.out.println(rootCluster);
 
 		stage.show();
+
+		MainViewController controller = loader.getController();
+		controller.init(model);
+		System.out.println(rootCluster);
 	}
 
 	public static void test() throws IOException {

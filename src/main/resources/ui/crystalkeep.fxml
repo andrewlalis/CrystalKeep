@@ -7,6 +7,9 @@
 <?import javafx.scene.control.MenuItem?>
 
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.Pane?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.andrewlalis.crystalkeep.control.MainViewController">
    <MenuBar>
       <Menu text="File">
@@ -15,10 +18,17 @@
    </MenuBar>
    <BorderPane>
       <left>
-         <fx:include source="clusters_view.fxml" />
+         <BorderPane prefWidth="200.0">
+            <top>
+               <Label text="Clusters" BorderPane.alignment="TOP_CENTER"/>
+            </top>
+            <center>
+               <TreeView fx:id="clusterTreeView" prefWidth="200.0"/>
+            </center>
+         </BorderPane>
       </left>
       <center>
-         <fx:include source="shard_detail.fxml" />
+         <VBox fx:id="shardDetailContainer" minWidth="600" />
       </center>
    </BorderPane>
 </VBox>

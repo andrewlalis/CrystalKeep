@@ -3,12 +3,10 @@ package nl.andrewlalis.crystalkeep.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
-public class Cluster implements Comparable<Cluster> {
+public class Cluster implements Comparable<Cluster>, CrystalItem {
 	@Setter
 	private String name;
 	private final Set<Shard> shards;
@@ -35,6 +33,18 @@ public class Cluster implements Comparable<Cluster> {
 	public void addCluster(Cluster cluster) {
 		this.clusters.add(cluster);
 		cluster.setParent(this);
+	}
+
+	public List<Cluster> getClustersOrdered() {
+		List<Cluster> clusters = new ArrayList<>(this.getClusters());
+		clusters.sort(Comparator.naturalOrder());
+		return clusters;
+	}
+
+	public List<Shard> getShardsOrdered() {
+		List<Shard> shards = new ArrayList<>(this.getShards());
+		shards.sort(Comparator.naturalOrder());
+		return shards;
 	}
 
 	@Override
@@ -67,5 +77,10 @@ public class Cluster implements Comparable<Cluster> {
 			sb.append('\n').append(c.toString()).append('\n');
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public String getIconPath() {
+		return "ui/images/cluster_node_icon.png";
 	}
 }

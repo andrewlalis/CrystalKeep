@@ -18,7 +18,7 @@ import java.util.Objects;
  * </p>
  */
 @Getter
-public abstract class Shard implements Comparable<Shard> {
+public abstract class Shard implements Comparable<Shard>, CrystalItem {
 	@Setter
 	private Cluster cluster;
 	@Setter
@@ -56,5 +56,10 @@ public abstract class Shard implements Comparable<Shard> {
 	@Override
 	public String toString() {
 		return "Shard: name=\"" + this.name + "\", type=" + this.type + ", createdAt=" + this.createdAt;
+	}
+
+	@Override
+	public String getIconPath() {
+		return "ui/images/shard_node_icon.png";
 	}
 }
