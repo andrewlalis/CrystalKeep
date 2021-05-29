@@ -1,7 +1,5 @@
 package nl.andrewlalis.crystalkeep.model;
 
-import lombok.Getter;
-import lombok.Setter;
 import nl.andrewlalis.crystalkeep.model.shards.ShardType;
 
 import java.time.LocalDateTime;
@@ -17,9 +15,7 @@ import java.util.Objects;
  *     decide which shard type to deserialize.
  * </p>
  */
-@Getter
 public abstract class Shard implements Comparable<Shard>, CrystalItem {
-	@Setter
 	private String name;
 	private final LocalDateTime createdAt;
 	private final ShardType type;
@@ -28,6 +24,23 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 		this.name = name;
 		this.createdAt = createdAt;
 		this.type = type;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public ShardType getType() {
+		return type;
 	}
 
 	@Override
@@ -57,6 +70,6 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 
 	@Override
 	public String getIconPath() {
-		return "ui/images/shard_node_icon.png";
+		return "/nl/andrewlalis/crystalkeep/ui/images/shard_node_icon.png";
 	}
 }

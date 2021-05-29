@@ -1,7 +1,5 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
-import lombok.Getter;
-import lombok.Setter;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
@@ -10,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 public class LoginCredentialsShard extends Shard {
 	private String username;
 	private String password;
@@ -19,6 +15,22 @@ public class LoginCredentialsShard extends Shard {
 	public LoginCredentialsShard(String name, LocalDateTime createdAt, String username, String password) {
 		super(name, createdAt, ShardType.LOGIN_CREDENTIALS);
 		this.username = username;
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

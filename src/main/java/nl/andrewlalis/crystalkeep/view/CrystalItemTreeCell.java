@@ -3,9 +3,12 @@ package nl.andrewlalis.crystalkeep.view;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import nl.andrewlalis.crystalkeep.model.CrystalItem;
 import nl.andrewlalis.crystalkeep.model.Shard;
+
+import java.io.InputStream;
 
 public class CrystalItemTreeCell extends TreeCell<CrystalItem> {
 	private final ContextMenu contextMenu;
@@ -21,10 +24,13 @@ public class CrystalItemTreeCell extends TreeCell<CrystalItem> {
 
 		if (!empty) {
 			this.setText(item.getName());
-			ImageView icon = new ImageView(item.getIconPath());
-			icon.setFitHeight(16);
-			icon.setPreserveRatio(true);
-			this.setGraphic(icon);
+			InputStream is = getClass().getResourceAsStream(item.getIconPath());
+			if (is != null) {
+				ImageView icon = new ImageView(new Image(is));
+				icon.setFitHeight(16);
+				icon.setPreserveRatio(true);
+				this.setGraphic(icon);
+			}
 			if (item instanceof Shard) {
 				this.setContextMenu(this.contextMenu);
 			}

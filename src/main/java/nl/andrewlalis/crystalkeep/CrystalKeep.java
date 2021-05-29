@@ -22,7 +22,7 @@ public class CrystalKeep extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		URL url = CrystalKeep.class.getClassLoader().getResource("ui/crystalkeep.fxml");
+		URL url = getClass().getResource("/nl/andrewlalis/crystalkeep/ui/crystalkeep.fxml");
 		FXMLLoader loader = new FXMLLoader(url);
 		Model model = new Model();
 		var scene = new Scene(loader.load());

@@ -17,6 +17,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the functionality of the {@link ClusterSerializer}, which handles
+ * transforming key model components to and from byte arrays for storage.
+ */
 public class ClusterSerializerTest {
 	private static List<Shard> testShardIOData() {
 		return List.of(
@@ -92,7 +96,7 @@ public class ClusterSerializerTest {
 				"Cluster name does not match expected."
 		);
 
-		Cluster loaded = ClusterSerializer.readCluster(new ByteArrayInputStream(data), null);
+		Cluster loaded = ClusterSerializer.readCluster(new ByteArrayInputStream(data));
 		assertEquals(c, loaded, "Loaded cluster should equal original cluster.");
 		bos.reset();
 		ClusterSerializer.writeCluster(loaded, bos);

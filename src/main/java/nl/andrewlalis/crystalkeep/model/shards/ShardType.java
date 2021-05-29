@@ -1,6 +1,5 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
-import lombok.Getter;
 import nl.andrewlalis.crystalkeep.model.Shard;
 
 /**
@@ -22,11 +21,14 @@ public enum ShardType {
 	 */
 	LOGIN_CREDENTIALS(2);
 
-	@Getter
 	private final int value;
 
 	ShardType(int value) {
 		this.value = value;
+	}
+
+	public int getValue() {
+		return value;
 	}
 
 	public static ShardType valueOf(int value) {

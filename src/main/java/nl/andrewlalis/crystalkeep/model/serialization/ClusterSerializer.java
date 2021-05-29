@@ -39,20 +39,12 @@ public class ClusterSerializer {
 	 */
 	public static void writeCluster(Cluster cluster, OutputStream os) throws IOException {
 		ByteUtils.writeLengthPrefixed(cluster.getName(), os);
-
 		os.write(ByteUtils.toBytes(cluster.getClusters().size()));
-		Cluster[] children = new Cluster[cluster.getClusters().size()];
-		cluster.getClusters().toArray(children);
-		Arrays.sort(children);
-		for (Cluster child : children) {
+		for (Cluster child : cluster.getClustersOrdered()) {
 			writeCluster(child, os);
 		}
-
 		os.write(ByteUtils.toBytes(cluster.getShards().size()));
-		Shard[] shards = new Shard[cluster.getShards().size()];
-		cluster.getShards().toArray(shards);
-		Arrays.sort(shards);
-		for (Shard shard : shards) {
+		for (Shard shard : cluster.getShardsOrdered()) {
 			writeShard(shard, os);
 		}
 	}
@@ -60,16 +52,15 @@ public class ClusterSerializer {
 	/**
 	 * Reads a cluster from an input stream.
 	 * @param is The input stream to read from.
-	 * @param parent The parent cluster of this cluster. This may be null.
 	 * @return The cluster that was read.
 	 * @throws IOException If data could not be read from the stream.
 	 */
-	public static Cluster readCluster(InputStream is, Cluster parent) throws IOException {
+	public static Cluster readCluster(InputStream is) throws IOException {
 		String name = ByteUtils.readLengthPrefixedString(is);
-		Cluster cluster = new Cluster(name, new HashSet<>(), new HashSet<>(), parent);
+		Cluster cluster = new Cluster(name, new HashSet<>(), new HashSet<>());
 		int childCount = toInt(is.readNBytes(4));
 		for (int i = 0; i < childCount; i++) {
-			cluster.addCluster(readCluster(is, cluster));
+			cluster.addCluster(readCluster(is));
 		}
 		int shardCount = toInt(is.readNBytes(4));
 		for (int i = 0; i < shardCount; i++) {

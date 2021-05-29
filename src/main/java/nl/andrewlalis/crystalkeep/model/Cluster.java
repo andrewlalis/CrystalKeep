@@ -1,28 +1,37 @@
 package nl.andrewlalis.crystalkeep.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.*;
 
-@Getter
 public class Cluster implements Comparable<Cluster>, CrystalItem {
-	@Setter
 	private String name;
 	private final Set<Shard> shards;
 	private final Set<Cluster> clusters;
-	@Setter
-	private Cluster parent;
 
-	public Cluster(String name, Set<Shard> shards, Set<Cluster> clusters, Cluster parent) {
+	public Cluster(String name, Set<Shard> shards, Set<Cluster> clusters) {
 		this.name = name;
 		this.shards = shards;
 		this.clusters = clusters;
-		this.parent = parent;
 	}
 
 	public Cluster(String name) {
-		this(name, new HashSet<>(), new HashSet<>(), null);
+		this(name, new HashSet<>(), new HashSet<>());
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<Shard> getShards() {
+		return shards;
+	}
+
+	public Set<Cluster> getClusters() {
+		return clusters;
 	}
 
 	public void addShard(Shard shard) {
@@ -31,7 +40,6 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 
 	public void addCluster(Cluster cluster) {
 		this.clusters.add(cluster);
-		cluster.setParent(this);
 	}
 
 	public List<Cluster> getClustersOrdered() {
@@ -56,12 +64,12 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Cluster cluster = (Cluster) o;
-		return getName().equals(cluster.getName()) && Objects.equals(getParent(), cluster.getParent());
+		return getName().equals(cluster.getName());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getName(), getParent());
+		return Objects.hash(getName());
 	}
 
 	@Override
@@ -80,6 +88,6 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 
 	@Override
 	public String getIconPath() {
-		return "ui/images/cluster_node_icon.png";
+		return "/nl/andrewlalis/crystalkeep/ui/images/cluster_node_icon.png";
 	}
 }

@@ -15,7 +15,7 @@ public class ClusterLoader {
 
 	public Cluster loadDefault() throws IOException {
 		InputStream is = new FileInputStream(DEFAULT_CLUSTER.toFile());
-		return ClusterSerializer.readCluster(is, null);
+		return ClusterSerializer.readCluster(is);
 	}
 
 	public void saveDefault(Cluster cluster) throws IOException {

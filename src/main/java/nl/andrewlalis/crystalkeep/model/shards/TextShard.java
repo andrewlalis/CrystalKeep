@@ -1,7 +1,5 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
-import lombok.Getter;
-import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
@@ -10,12 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 
-@Getter
 public class TextShard extends Shard {
 	private String text;
 
 	public TextShard(String name, LocalDateTime createdAt, String text) {
 		super(name, createdAt, ShardType.TEXT);
+		this.text = text;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
 		this.text = text;
 	}
 
