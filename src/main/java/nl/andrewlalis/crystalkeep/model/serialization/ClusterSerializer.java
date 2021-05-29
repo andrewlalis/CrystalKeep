@@ -6,9 +6,9 @@ import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.ShardType;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,31 +33,28 @@ public class ClusterSerializer {
 	/**
 	 * Serializes a cluster to a byte array, including all shards and nested
 	 * clusters.
-	 * TODO: Use output stream instead of byte array.
 	 * @param cluster The cluster to serialize.
-	 * @return The byte array representing the cluster.
+	 * @param os The output stream to write to.
 	 * @throws IOException If an error occurs while writing the cluster.
 	 */
-	public static byte[] toBytes(Cluster cluster) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ByteUtils.writeLengthPrefixed(cluster.getName(), bos);
+	public static void writeCluster(Cluster cluster, OutputStream os) throws IOException {
+		ByteUtils.writeLengthPrefixed(cluster.getName(), os);
 
-		bos.write(ByteUtils.toBytes(cluster.getClusters().size()));
+		os.write(ByteUtils.toBytes(cluster.getClusters().size()));
 		Cluster[] children = new Cluster[cluster.getClusters().size()];
 		cluster.getClusters().toArray(children);
 		Arrays.sort(children);
 		for (Cluster child : children) {
-			bos.write(toBytes(child));
+			writeCluster(child, os);
 		}
 
-		bos.write(ByteUtils.toBytes(cluster.getShards().size()));
+		os.write(ByteUtils.toBytes(cluster.getShards().size()));
 		Shard[] shards = new Shard[cluster.getShards().size()];
 		cluster.getShards().toArray(shards);
 		Arrays.sort(shards);
 		for (Shard shard : shards) {
-			bos.write(toBytes(shard));
+			writeShard(shard, os);
 		}
-		return bos.toByteArray();
 	}
 
 	/**
@@ -67,16 +64,16 @@ public class ClusterSerializer {
 	 * @return The cluster that was read.
 	 * @throws IOException If data could not be read from the stream.
 	 */
-	public static Cluster clusterFromBytes(InputStream is, Cluster parent) throws IOException {
+	public static Cluster readCluster(InputStream is, Cluster parent) throws IOException {
 		String name = ByteUtils.readLengthPrefixedString(is);
 		Cluster cluster = new Cluster(name, new HashSet<>(), new HashSet<>(), parent);
 		int childCount = toInt(is.readNBytes(4));
 		for (int i = 0; i < childCount; i++) {
-			cluster.addCluster(clusterFromBytes(is, cluster));
+			cluster.addCluster(readCluster(is, cluster));
 		}
 		int shardCount = toInt(is.readNBytes(4));
 		for (int i = 0; i < shardCount; i++) {
-			cluster.addShard(shardFromBytes(is, cluster));
+			cluster.addShard(readShard(is));
 		}
 		return cluster;
 	}
@@ -86,29 +83,26 @@ public class ClusterSerializer {
 	 * standard shard information, then using a specific {@link ShardSerializer}
 	 * to get the bytes that represent the body of the shard.
 	 * @param shard The shard to serialize.
-	 * @return A byte array representing the shard.
+	 * @param os The output stream to write to.
 	 * @throws IOException If byte array stream could not be written to.
 	 */
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public static byte[] toBytes(Shard shard) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ByteUtils.writeLengthPrefixed(shard.getName().getBytes(StandardCharsets.UTF_8), bos);
-		ByteUtils.writeLengthPrefixed(shard.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).getBytes(StandardCharsets.UTF_8), bos);
-		bos.write(ByteUtils.toBytes(shard.getType().getValue()));
+	public static void writeShard(Shard shard, OutputStream os) throws IOException {
+		ByteUtils.writeLengthPrefixed(shard.getName().getBytes(StandardCharsets.UTF_8), os);
+		ByteUtils.writeLengthPrefixed(shard.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).getBytes(StandardCharsets.UTF_8), os);
+		os.write(ByteUtils.toBytes(shard.getType().getValue()));
 		ShardSerializer serializer = serializers.get(shard.getType());
-		bos.write(serializer.serialize(shard));
-		return bos.toByteArray();
+		os.write(serializer.serialize(shard));
 	}
 
 	/**
 	 * Deserializes a shard from a byte array that's being read by the given
 	 * input stream.
 	 * @param is The input stream to read from.
-	 * @param cluster The cluster that the shard should belong to.
 	 * @return The shard that was deserialized.
 	 * @throws IOException If an error occurs while reading bytes.
 	 */
-	public static Shard shardFromBytes(InputStream is, Cluster cluster) throws IOException {
+	public static Shard readShard(InputStream is) throws IOException {
 		String name = ByteUtils.readLengthPrefixedString(is);
 		LocalDateTime createdAt = LocalDateTime.parse(ByteUtils.readLengthPrefixedString(is), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		ShardType type = ShardType.valueOf(ByteUtils.toInt(is.readNBytes(4)));
@@ -116,6 +110,6 @@ public class ClusterSerializer {
 		if (serializer == null) {
 			throw new IOException("Unsupported shard type.");
 		}
-		return serializer.deserialize(is, cluster, name, createdAt);
+		return serializer.deserialize(is, name, createdAt);
 	}
 }

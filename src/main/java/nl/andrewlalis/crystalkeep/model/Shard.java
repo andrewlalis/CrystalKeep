@@ -20,14 +20,11 @@ import java.util.Objects;
 @Getter
 public abstract class Shard implements Comparable<Shard>, CrystalItem {
 	@Setter
-	private Cluster cluster;
-	@Setter
 	private String name;
 	private final LocalDateTime createdAt;
 	private final ShardType type;
 
-	public Shard(Cluster cluster, String name, LocalDateTime createdAt, ShardType type) {
-		this.cluster = cluster;
+	public Shard(String name, LocalDateTime createdAt, ShardType type) {
 		this.name = name;
 		this.createdAt = createdAt;
 		this.type = type;
@@ -45,12 +42,12 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Shard shard = (Shard) o;
-		return getCluster().equals(shard.getCluster()) && getName().equals(shard.getName()) && getType() == shard.getType();
+		return getName().equals(shard.getName()) && getType() == shard.getType();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getCluster(), getName(), getType());
+		return Objects.hash(getName(), getType());
 	}
 
 	@Override

@@ -27,7 +27,6 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 
 	public void addShard(Shard shard) {
 		this.shards.add(shard);
-		shard.setCluster(this);
 	}
 
 	public void addCluster(Cluster cluster) {

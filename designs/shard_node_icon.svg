@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333333"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="shard_node_icon.svg"
+   inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\ui\images\shard_node_icon.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="31.678384"
+     inkscape:cx="4.3963569"
+     inkscape:cy="7.5940447"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     units="px" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-292.76667)">
+    <path
+       sodipodi:type="star"
+       style="fill:#72deff;fill-opacity:1;stroke:none;stroke-width:0.07803907;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path817"
+       sodipodi:sides="9"
+       sodipodi:cx="2.1166666"
+       sodipodi:cy="294.93815"
+       sodipodi:r1="1.8178079"
+       sodipodi:r2="1.2179312"
+       sodipodi:arg1="0.52359878"
+       sodipodi:arg2="0.87266463"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 3.6909344,295.84704 -0.7913968,0.0241 -0.1611441,0.77519 -0.6217269,-0.49025 -0.621727,0.49025 -0.1611441,-0.77519 -0.79139678,-0.0241 0.37483979,-0.69741 -0.59076328,-0.52715 0.73543197,-0.2933 -0.11370504,-0.78356 0.75190744,0.24804 0.416557,-0.67333 0.4165569,0.67333 0.7519075,-0.24804 -0.1137051,0.78356 0.735432,0.2933 -0.5907633,0.52715 z"
+       inkscape:transform-center-x="0.06028767"
+       inkscape:transform-center-y="0.030212626" />
+  </g>
+</svg>

@@ -2,7 +2,6 @@ package nl.andrewlalis.crystalkeep.model.shards;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
@@ -17,8 +16,8 @@ public class LoginCredentialsShard extends Shard {
 	private String username;
 	private String password;
 
-	public LoginCredentialsShard(Cluster cluster, String name, LocalDateTime createdAt, String username, String password) {
-		super(cluster, name, createdAt, ShardType.LOGIN_CREDENTIALS);
+	public LoginCredentialsShard(String name, LocalDateTime createdAt, String username, String password) {
+		super(name, createdAt, ShardType.LOGIN_CREDENTIALS);
 		this.username = username;
 		this.password = password;
 	}
@@ -36,10 +35,10 @@ public class LoginCredentialsShard extends Shard {
 		}
 
 		@Override
-		public LoginCredentialsShard deserialize(InputStream is, Cluster cluster, String name, LocalDateTime createdAt) throws IOException {
+		public LoginCredentialsShard deserialize(InputStream is, String name, LocalDateTime createdAt) throws IOException {
 			String username = ByteUtils.readLengthPrefixedString(is);
 			String password = ByteUtils.readLengthPrefixedString(is);
-			return new LoginCredentialsShard(cluster, name, createdAt, username, password);
+			return new LoginCredentialsShard(name, createdAt, username, password);
 		}
 	}
 }

@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class TextShard extends Shard {
 	private String text;
 
-	public TextShard(Cluster cluster, String name, LocalDateTime createdAt, String text) {
-		super(cluster, name, createdAt, ShardType.TEXT);
+	public TextShard(String name, LocalDateTime createdAt, String text) {
+		super(name, createdAt, ShardType.TEXT);
 		this.text = text;
 	}
 
@@ -31,9 +31,9 @@ public class TextShard extends Shard {
 		}
 
 		@Override
-		public TextShard deserialize(InputStream is, Cluster cluster, String name, LocalDateTime createdAt) throws IOException {
+		public TextShard deserialize(InputStream is, String name, LocalDateTime createdAt) throws IOException {
 			String text = ByteUtils.readLengthPrefixedString(is);
-			return new TextShard(cluster, name, createdAt, text);
+			return new TextShard(name, createdAt, text);
 		}
 	}
 }
