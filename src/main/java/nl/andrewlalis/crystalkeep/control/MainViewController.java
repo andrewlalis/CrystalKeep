@@ -2,21 +2,19 @@ package nl.andrewlalis.crystalkeep.control;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import nl.andrewlalis.crystalkeep.io.ClusterIO;
 import nl.andrewlalis.crystalkeep.model.*;
-import nl.andrewlalis.crystalkeep.model.serialization.ClusterLoader;
 import nl.andrewlalis.crystalkeep.view.ClusterTreeItem;
 import nl.andrewlalis.crystalkeep.view.CrystalItemTreeCell;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.security.GeneralSecurityException;
+import java.util.Optional;
 
 public class MainViewController implements ModelListener {
 	private Model model;
@@ -65,42 +63,50 @@ public class MainViewController implements ModelListener {
 	public void load() {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Load a Cluster");
-		chooser.setInitialDirectory(ClusterLoader.CLUSTER_PATH.toFile());
+		chooser.setInitialDirectory(ClusterIO.CLUSTER_PATH.toFile());
 		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
 		File file = chooser.showOpenDialog(this.clusterTreeView.getScene().getWindow());
 		if (file == null) return;
-		ClusterLoader loader = new ClusterLoader();
-		var password = loader.promptPassword();
-		if (password.isEmpty() || password.get().isEmpty()) return;
+		ClusterIO loader = new ClusterIO();
+		var password = this.promptPassword();
+		Cluster cluster;
 		try {
-			var cluster = loader.load(file.toPath(), password.get());
-			model.setActiveCluster(cluster);
-			model.setActiveClusterPath(file.toPath());
+			if (password.isEmpty() || password.get().isEmpty()) {
+				cluster = loader.loadUnencrypted(file.toPath());
+			} else {
+				cluster = loader.load(file.toPath(), password.get());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			new Alert(Alert.AlertType.WARNING, "Could not load cluster.").showAndWait();
+			return;
 		}
+		model.setActiveCluster(cluster);
+		model.setActiveClusterPath(file.toPath());
 	}
 
 	@FXML
 	public void save() {
 		if (model.getActiveCluster() == null) return;
-		ClusterLoader loader = new ClusterLoader();
+		ClusterIO loader = new ClusterIO();
 		Path path = model.getActiveClusterPath();
 		if (path == null) {
 			FileChooser chooser = new FileChooser();
 			chooser.setTitle("Save Cluster");
-			chooser.setInitialDirectory(ClusterLoader.CLUSTER_PATH.toFile());
+			chooser.setInitialDirectory(ClusterIO.CLUSTER_PATH.toFile());
 			chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
 			File file = chooser.showSaveDialog(this.clusterTreeView.getScene().getWindow());
 			if (file == null) return;
 			path = file.toPath();
 		}
-		var password = loader.promptPassword();
-		if (password.isEmpty() || password.get().isEmpty()) return;
+		var password = this.promptPassword();
 		try {
-			new ClusterLoader().save(model.getActiveCluster(), path, password.get());
-		} catch (IOException | GeneralSecurityException e) {
+			if (password.isEmpty() || password.get().isEmpty()) {
+				loader.saveUnencrypted(model.getActiveCluster(), path);
+			} else {
+				loader.save(model.getActiveCluster(), path, password.get());
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
 			alert.showAndWait();
@@ -112,5 +118,24 @@ public class MainViewController implements ModelListener {
 		Cluster c = new Cluster("Root");
 		model.setActiveCluster(c);
 		model.setActiveClusterPath(null);
+	}
+
+	private Optional<String> promptPassword() {
+		Dialog<String> d = new Dialog<>();
+		d.setTitle("Enter Password");
+		d.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+		PasswordField pwField = new PasswordField();
+		VBox content = new VBox(10);
+		content.setAlignment(Pos.CENTER);
+		content.getChildren().addAll(new Label("Enter password"), pwField);
+		d.getDialogPane().setContent(content);
+		d.setResultConverter(param -> {
+			if (param == ButtonType.OK) {
+				return pwField.getText();
+			}
+			return null;
+		});
+		return d.showAndWait();
 	}
 }

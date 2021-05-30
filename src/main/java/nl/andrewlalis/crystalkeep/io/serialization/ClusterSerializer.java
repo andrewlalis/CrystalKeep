@@ -1,4 +1,4 @@
-package nl.andrewlalis.crystalkeep.model.serialization;
+package nl.andrewlalis.crystalkeep.io.serialization;
 
 import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import static nl.andrewlalis.crystalkeep.model.serialization.ByteUtils.toInt;
+import static nl.andrewlalis.crystalkeep.io.serialization.ByteUtils.toInt;
 
 /**
  * This serializer class offers some methods for reading and writing clusters

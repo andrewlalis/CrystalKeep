@@ -1,4 +1,4 @@
-package nl.andrewlalis.crystalkeep.model.serialization;
+package nl.andrewlalis.crystalkeep.io.serialization;
 
 import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * transforming key model components to and from byte arrays for storage.
  */
 public class ClusterSerializerTest {
-	private static List<Shard> testShardIOData() {
+	public static List<Shard> testShardIOData() {
 		return List.of(
 				new TextShard("a", LocalDateTime.now(), "Hello world!"),
 				new TextShard("Another", LocalDateTime.now(), "Testing"),
@@ -58,7 +58,7 @@ public class ClusterSerializerTest {
 		assertArrayEquals(data, data2, "Serialized data from a shard should not change.");
 	}
 
-	private static List<Cluster> testClusterIOData() {
+	public static List<Cluster> testClusterIOData() {
 		List<Cluster> clusters = new ArrayList<>();
 		clusters.add(new Cluster("test"));
 

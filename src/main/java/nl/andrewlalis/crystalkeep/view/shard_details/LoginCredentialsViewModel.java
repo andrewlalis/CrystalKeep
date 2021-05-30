@@ -2,11 +2,11 @@ package nl.andrewlalis.crystalkeep.view.shard_details;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 
@@ -47,13 +47,28 @@ public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsSh
 		passwordsContainer.getChildren().add(passwordField);
 		passwordsContainer.getChildren().add(rawPasswordField);
 		gp.add(passwordsContainer, 1, 1);
+
+		var passwordActionsPane = new HBox(5);
 		var showPasswordCheckbox = new CheckBox("Show password");
 		showPasswordCheckbox.setSelected(false);
 		showPasswordCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			passwordField.setVisible(!newValue);
 			rawPasswordField.setVisible(newValue);
 		});
-		gp.add(showPasswordCheckbox, 1, 2);
+		var copyPasswordButton = new Button("Copy to Clipboard");
+		copyPasswordButton.setOnAction(event -> {
+			ClipboardContent content = new ClipboardContent();
+			content.putString(shard.getPassword());
+			Clipboard.getSystemClipboard().setContent(content);
+		});
+		var typePasswordButton = new Button("Auto Type");
+		typePasswordButton.setOnAction(event -> {
+			System.out.println("Not yet implemented.");
+		});
+		typePasswordButton.setDisable(true);
+		passwordActionsPane.getChildren().addAll(showPasswordCheckbox, copyPasswordButton, typePasswordButton);
+
+		gp.add(passwordActionsPane, 1, 2);
 		return gp;
 	}
 }

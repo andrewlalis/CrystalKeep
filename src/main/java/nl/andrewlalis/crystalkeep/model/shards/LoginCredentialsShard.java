@@ -2,8 +2,8 @@ package nl.andrewlalis.crystalkeep.model.shards;
 
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.ShardType;
-import nl.andrewlalis.crystalkeep.model.serialization.ByteUtils;
-import nl.andrewlalis.crystalkeep.model.serialization.ShardSerializer;
+import nl.andrewlalis.crystalkeep.io.serialization.ByteUtils;
+import nl.andrewlalis.crystalkeep.io.serialization.ShardSerializer;
 
 import java.io.IOException;
 import java.io.InputStream;

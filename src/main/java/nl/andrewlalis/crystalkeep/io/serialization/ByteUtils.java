@@ -1,4 +1,4 @@
-package nl.andrewlalis.crystalkeep.model.serialization;
+package nl.andrewlalis.crystalkeep.io.serialization;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
