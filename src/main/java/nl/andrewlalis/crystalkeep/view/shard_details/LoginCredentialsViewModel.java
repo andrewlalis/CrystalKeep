@@ -10,8 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 
-public class LoginCredentialsPane extends ShardPane<LoginCredentialsShard> {
-	public LoginCredentialsPane(LoginCredentialsShard shard) {
+public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsShard> {
+	public LoginCredentialsViewModel(LoginCredentialsShard shard) {
 		super(shard);
 	}
 
@@ -23,6 +23,7 @@ public class LoginCredentialsPane extends ShardPane<LoginCredentialsShard> {
 		gp.setVgap(5);
 		gp.add(new Label("Username"), 0, 0);
 		var usernameField = new TextField(shard.getUsername());
+		usernameField.setPrefColumnCount(40);
 		usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			shard.setUsername(newValue);
 		});
@@ -30,8 +31,10 @@ public class LoginCredentialsPane extends ShardPane<LoginCredentialsShard> {
 		gp.add(new Label("Password"), 0, 1);
 		var passwordField = new PasswordField();
 		passwordField.setText(shard.getPassword());
+		passwordField.setPrefColumnCount(40);
 		var rawPasswordField = new TextField(shard.getPassword());
 		rawPasswordField.setVisible(false);
+		rawPasswordField.setPrefColumnCount(40);
 		passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
 			shard.setPassword(newValue);
 			rawPasswordField.setText(newValue);

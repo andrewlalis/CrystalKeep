@@ -9,18 +9,18 @@ import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
-import nl.andrewlalis.crystalkeep.view.shard_details.LoginCredentialsPane;
-import nl.andrewlalis.crystalkeep.view.shard_details.ShardPane;
-import nl.andrewlalis.crystalkeep.view.shard_details.TextShardPane;
+import nl.andrewlalis.crystalkeep.view.shard_details.LoginCredentialsViewModel;
+import nl.andrewlalis.crystalkeep.view.shard_details.ShardViewModel;
+import nl.andrewlalis.crystalkeep.view.shard_details.TextShardViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ClusterTreeViewItemSelectionListener implements ChangeListener<TreeItem<CrystalItem>> {
-	private static final Map<Class<? extends Shard>, Class<? extends ShardPane<? extends Shard>>> shardPanesMap = new HashMap<>();
+	private static final Map<Class<? extends Shard>, Class<? extends ShardViewModel<? extends Shard>>> shardPanesMap = new HashMap<>();
 	static {
-		shardPanesMap.put(TextShard.class, TextShardPane.class);
-		shardPanesMap.put(LoginCredentialsShard.class, LoginCredentialsPane.class);
+		shardPanesMap.put(TextShard.class, TextShardViewModel.class);
+		shardPanesMap.put(LoginCredentialsShard.class, LoginCredentialsViewModel.class);
 	}
 
 	private final VBox shardDetailContainer;
@@ -36,8 +36,8 @@ public class ClusterTreeViewItemSelectionListener implements ChangeListener<Tree
 			var node = (ShardTreeItem) newValue;
 			var paneClass = shardPanesMap.get(node.getShard().getClass());
 			try {
-				var pane = paneClass.getDeclaredConstructor(node.getShard().getClass()).newInstance(node.getShard());
-				shardDetailContainer.getChildren().add(pane);
+				var vm = paneClass.getDeclaredConstructor(node.getShard().getClass()).newInstance(node.getShard());
+				shardDetailContainer.getChildren().add(vm.getContentPane());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

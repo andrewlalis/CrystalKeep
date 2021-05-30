@@ -4,8 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
-public class TextShardPane extends ShardPane<TextShard> {
-	public TextShardPane(TextShard shard) {
+public class TextShardViewModel extends ShardViewModel<TextShard> {
+	public TextShardViewModel(TextShard shard) {
 		super(shard);
 	}
 

@@ -12,9 +12,15 @@ import nl.andrewlalis.crystalkeep.model.Shard;
 
 import java.time.format.DateTimeFormatter;
 
-public abstract class ShardPane<T extends Shard> extends VBox {
-	public ShardPane(T shard) {
-		this.setSpacing(5);
+public abstract class ShardViewModel<T extends Shard> {
+	protected final T shard;
+
+	public ShardViewModel(T shard) {
+		this.shard = shard;
+	}
+
+	public Node getContentPane() {
+		VBox pane = new VBox(5);
 		GridPane gp = new GridPane();
 		gp.setPadding(new Insets(5));
 		gp.setHgap(5);
@@ -29,9 +35,10 @@ public abstract class ShardPane<T extends Shard> extends VBox {
 		var createdAtField = new TextField(shard.getCreatedAt().format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss")));
 		createdAtField.setEditable(false);
 		gp.add(createdAtField, 1, 1);
-		this.getChildren().add(gp);
-		this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-		this.getChildren().add(this.getContent(shard));
+		pane.getChildren().add(gp);
+		pane.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		pane.getChildren().add(this.getContent(shard));
+		return pane;
 	}
 
 	protected abstract Node getContent(T shard);

@@ -1,7 +1,9 @@
 package nl.andrewlalis.crystalkeep.model.serialization;
 
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextInputDialog;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import nl.andrewlalis.crystalkeep.model.Cluster;
 
 import javax.crypto.Cipher;
@@ -29,11 +31,21 @@ public class ClusterLoader {
 	private static final byte[] IV = "Fafioje;a324fsde".getBytes(StandardCharsets.UTF_8);
 
 	public Optional<String> promptPassword() {
-		Dialog<String> d = new TextInputDialog();
-		d.setContentText("Enter the password");
-		d.setGraphic(null);
-		d.setHeaderText(null);
+		Dialog<String> d = new Dialog<>();
 		d.setTitle("Enter Password");
+		d.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+		PasswordField pwField = new PasswordField();
+		VBox content = new VBox(10);
+		content.setAlignment(Pos.CENTER);
+		content.getChildren().addAll(new Label("Enter password"), pwField);
+		d.getDialogPane().setContent(content);
+		d.setResultConverter(param -> {
+			if (param == ButtonType.OK) {
+				return pwField.getText();
+			}
+			return null;
+		});
 		return d.showAndWait();
 	}
 

@@ -1,5 +1,6 @@
 package nl.andrewlalis.crystalkeep.model;
 
+import nl.andrewlalis.crystalkeep.model.shards.FileShard;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
@@ -20,7 +21,12 @@ public enum ShardType {
 	/**
 	 * Represents a {@link LoginCredentialsShard}
 	 */
-	LOGIN_CREDENTIALS(2);
+	LOGIN_CREDENTIALS(2),
+
+	/**
+	 * Represents a {@link FileShard}
+	 */
+	FILE(3);
 
 	private final int value;
 
