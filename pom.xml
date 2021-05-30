@@ -24,7 +24,11 @@
 				<version>0.0.4</version>
 				<configuration>
 					<mainClass>nl.andrewlalis.crystalkeep.CrystalKeep</mainClass>
-					<launcher>crystalkeep.exe</launcher>
+					<noManPages>true</noManPages>
+					<stripDebug>true</stripDebug>
+					<compress>2</compress>
+					<noHeaderFiles>true</noHeaderFiles>
+					<launcher>crystalkeep</launcher>
 				</configuration>
 			</plugin>
 			<plugin>
