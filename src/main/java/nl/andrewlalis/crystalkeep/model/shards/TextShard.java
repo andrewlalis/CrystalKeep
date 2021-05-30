@@ -17,6 +17,10 @@ public class TextShard extends Shard {
 		this.text = text;
 	}
 
+	public TextShard(String name) {
+		this(name, LocalDateTime.now(), "");
+	}
+
 	public String getText() {
 		return text;
 	}

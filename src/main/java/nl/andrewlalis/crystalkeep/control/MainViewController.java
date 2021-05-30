@@ -1,32 +1,24 @@
 package nl.andrewlalis.crystalkeep.control;
 
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import nl.andrewlalis.crystalkeep.model.*;
 import nl.andrewlalis.crystalkeep.model.serialization.ClusterLoader;
-import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
-import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 import nl.andrewlalis.crystalkeep.view.ClusterTreeItem;
 import nl.andrewlalis.crystalkeep.view.CrystalItemTreeCell;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
-import nl.andrewlalis.crystalkeep.view.shard_details.LoginCredentialsPane;
-import nl.andrewlalis.crystalkeep.view.shard_details.ShardPane;
-import nl.andrewlalis.crystalkeep.view.shard_details.TextShardPane;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Path;
+import java.security.GeneralSecurityException;
 
 public class MainViewController implements ModelListener {
-	private static final Map<Class<? extends Shard>, Class<? extends ShardPane<? extends Shard>>> shardPanesMap = new HashMap<>();
-	static {
-		shardPanesMap.put(TextShard.class, TextShardPane.class);
-		shardPanesMap.put(LoginCredentialsShard.class, LoginCredentialsPane.class);
-	}
-
 	private Model model;
 
 	@FXML
@@ -40,29 +32,8 @@ public class MainViewController implements ModelListener {
 		this.activeClusterUpdated();
 		assert(this.clusterTreeView != null);
 		this.clusterTreeView.setCellFactory(param -> new CrystalItemTreeCell(this.model));
-		this.clusterTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			shardDetailContainer.getChildren().clear();
-			if (newValue instanceof ShardTreeItem) {
-				var node = (ShardTreeItem) newValue;
-				var paneClass = shardPanesMap.get(node.getShard().getClass());
-				try {
-					var pane = paneClass.getDeclaredConstructor(node.getShard().getClass()).newInstance(node.getShard());
-					shardDetailContainer.getChildren().add(pane);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	@FXML
-	public void exit(ActionEvent event) {
-		System.out.println("Exiting...");
-		try {
-			new ClusterLoader().saveDefault(model.getActiveCluster());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.clusterTreeView.getSelectionModel().selectedItemProperty()
+				.addListener(new ClusterTreeViewItemSelectionListener(this.shardDetailContainer));
 	}
 
 	@Override
@@ -83,5 +54,63 @@ public class MainViewController implements ModelListener {
 			node.getChildren().add(new ShardTreeItem(shard));
 		}
 		return node;
+	}
+
+	@FXML
+	public void exit() {
+		Platform.exit();
+	}
+
+	@FXML
+	public void load() {
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Load a Cluster");
+		chooser.setInitialDirectory(ClusterLoader.CLUSTER_PATH.toFile());
+		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
+		File file = chooser.showOpenDialog(this.clusterTreeView.getScene().getWindow());
+		if (file == null) return;
+		ClusterLoader loader = new ClusterLoader();
+		var password = loader.promptPassword();
+		if (password.isEmpty() || password.get().isEmpty()) return;
+		try {
+			var cluster = loader.load(file.toPath(), password.get());
+			model.setActiveCluster(cluster);
+			model.setActiveClusterPath(file.toPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+			new Alert(Alert.AlertType.WARNING, "Could not load cluster.").showAndWait();
+		}
+	}
+
+	@FXML
+	public void save() {
+		if (model.getActiveCluster() == null) return;
+		ClusterLoader loader = new ClusterLoader();
+		Path path = model.getActiveClusterPath();
+		if (path == null) {
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Save Cluster");
+			chooser.setInitialDirectory(ClusterLoader.CLUSTER_PATH.toFile());
+			chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
+			File file = chooser.showSaveDialog(this.clusterTreeView.getScene().getWindow());
+			if (file == null) return;
+			path = file.toPath();
+		}
+		var password = loader.promptPassword();
+		if (password.isEmpty() || password.get().isEmpty()) return;
+		try {
+			new ClusterLoader().save(model.getActiveCluster(), path, password.get());
+		} catch (IOException | GeneralSecurityException e) {
+			e.printStackTrace();
+			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
+	public void newCluster() {
+		Cluster c = new Cluster("Root");
+		model.setActiveCluster(c);
+		model.setActiveClusterPath(null);
 	}
 }

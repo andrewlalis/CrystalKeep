@@ -12,6 +12,7 @@ public class TextShardPane extends ShardPane<TextShard> {
 	@Override
 	protected Node getContent(TextShard shard) {
 		var textArea = new TextArea(shard.getText());
+		textArea.setWrapText(true);
 		textArea.textProperty().addListener((observable, oldValue, newValue) -> {
 			shard.setText(newValue);
 		});

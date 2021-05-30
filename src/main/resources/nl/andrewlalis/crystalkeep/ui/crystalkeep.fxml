@@ -13,6 +13,9 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.andrewlalis.crystalkeep.control.MainViewController">
    <MenuBar>
       <Menu text="File">
+         <MenuItem text="New" onAction="#newCluster" />
+         <MenuItem text="Load" onAction="#load" />
+         <MenuItem text="Save" onAction="#save" />
          <MenuItem text="Exit" onAction="#exit" />
       </Menu>
    </MenuBar>

@@ -19,6 +19,10 @@ public class LoginCredentialsShard extends Shard {
 		this.password = password;
 	}
 
+	public LoginCredentialsShard(String name) {
+		this(name, LocalDateTime.now(), "", "");
+	}
+
 	public String getUsername() {
 		return username;
 	}
