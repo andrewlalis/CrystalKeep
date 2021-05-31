@@ -8,10 +8,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.keyboard.NativeKeyAdapter;
-import org.jnativehook.keyboard.NativeKeyEvent;
+import org.controlsfx.control.Notifications;
 
 public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsShard> {
 	public LoginCredentialsViewModel(LoginCredentialsShard shard) {
@@ -63,19 +62,11 @@ public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsSh
 			ClipboardContent content = new ClipboardContent();
 			content.putString(shard.getPassword());
 			Clipboard.getSystemClipboard().setContent(content);
-		});
-
-		var copyBothButton = new Button("Copy Username and Password");
-		copyBothButton.setOnAction(event -> {
-			ClipboardContent content = new ClipboardContent();
-			content.putString(shard.getUsername());
-			final Clipboard c = Clipboard.getSystemClipboard();
-			c.setContent(content);
-			var t = new Thread(() -> {
-				while (c.getString().equals(shard.getUsername())) {
-					System.out.println("User hasn't pasted yet");
-				}
-			});
+			Notifications.create()
+				.text("Password copied to clipboard.")
+				.hideAfter(Duration.seconds(3))
+				.owner(gp)
+				.show();
 		});
 
 		passwordActionsPane.getChildren().addAll(showPasswordCheckbox, copyPasswordButton);

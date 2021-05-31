@@ -8,6 +8,10 @@ import nl.andrewlalis.crystalkeep.model.CrystalItem;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
 import nl.andrewlalis.crystalkeep.view.shard_details.ViewModels;
 
+/**
+ * This listener will update the shard detail container pane (the main center
+ * content of the application) to show the contents of a selected shard.
+ */
 public class ClusterTreeViewItemSelectionListener implements ChangeListener<TreeItem<CrystalItem>> {
 	private final VBox shardDetailContainer;
 

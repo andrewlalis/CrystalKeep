@@ -2,6 +2,7 @@ module crystalkeep {
 	requires javafx.fxml;
 	requires javafx.controls;
 	requires jnativehook;
+	requires org.controlsfx.controls;
 
 	opens nl.andrewlalis.crystalkeep.control;
 	opens nl.andrewlalis.crystalkeep;
