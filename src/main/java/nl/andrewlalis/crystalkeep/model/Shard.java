@@ -64,9 +64,4 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 	public String toString() {
 		return "Shard: name=\"" + this.name + "\", type=" + this.type + ", createdAt=" + this.createdAt;
 	}
-
-	@Override
-	public String getIconPath() {
-		return "/nl/andrewlalis/crystalkeep/ui/images/shard_node_icon.png";
-	}
 }

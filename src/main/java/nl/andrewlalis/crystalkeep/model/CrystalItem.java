@@ -6,5 +6,4 @@ package nl.andrewlalis.crystalkeep.model;
  */
 public interface CrystalItem {
 	String getName();
-	String getIconPath();
 }

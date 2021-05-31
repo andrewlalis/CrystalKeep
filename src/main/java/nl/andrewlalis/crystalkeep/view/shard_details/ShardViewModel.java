@@ -12,6 +12,12 @@ import nl.andrewlalis.crystalkeep.model.Shard;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The view model for a type of shard. A shard type's view model defines how the
+ * shard is displayed in the application, including the actual UI contents, and
+ * icon.
+ * @param <T> The type of shard.
+ */
 public abstract class ShardViewModel<T extends Shard> {
 	protected final T shard;
 
@@ -42,4 +48,8 @@ public abstract class ShardViewModel<T extends Shard> {
 	}
 
 	protected abstract Node getContent(T shard);
+
+	public String getIconPath() {
+		return "/nl/andrewlalis/crystalkeep/ui/images/shard_node_icon.png";
+	}
 }

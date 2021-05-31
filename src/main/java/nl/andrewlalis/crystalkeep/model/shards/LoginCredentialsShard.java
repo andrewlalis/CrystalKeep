@@ -44,11 +44,6 @@ public class LoginCredentialsShard extends Shard {
 		return super.toString() + ", username=\"" + this.username + "\", password=\"" + this.password + "\"";
 	}
 
-	@Override
-	public String getIconPath() {
-		return "/nl/andrewlalis/crystalkeep/ui/images/login_credentials_shard_node_icon.png";
-	}
-
 	public static class Serializer implements ShardSerializer<LoginCredentialsShard> {
 
 		@Override

@@ -16,9 +16,9 @@
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="cluster_node_icon.svg"
-   inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\ui\images\cluster_node_icon.png"
-   inkscape:export-xdpi="192"
-   inkscape:export-ydpi="192">
+   inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\nl\andrewlalis\crystalkeep\ui\images\cluster_node_icon.png"
+   inkscape:export-xdpi="1536"
+   inkscape:export-ydpi="1536">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.678384"
-     inkscape:cx="9.6523068"
-     inkscape:cy="7.5940447"
+     inkscape:zoom="44.8"
+     inkscape:cx="5.0060445"
+     inkscape:cy="7.4646004"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,7 +39,9 @@
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     units="px" />
+     units="px"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -48,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,21 +60,19 @@
      id="layer1"
      transform="translate(0,-292.76667)">
     <path
-       sodipodi:type="star"
-       style="fill:#f072ff;fill-opacity:1;stroke:none;stroke-width:0.07803907;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path817"
-       sodipodi:sides="9"
-       sodipodi:cx="2.1166666"
-       sodipodi:cy="294.93815"
-       sodipodi:r1="1.8178079"
-       sodipodi:r2="1.2179312"
-       sodipodi:arg1="0.52359878"
-       sodipodi:arg2="0.87266463"
-       inkscape:flatsided="false"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 3.6909344,295.84704 -0.7913968,0.0241 -0.1611441,0.77519 -0.6217269,-0.49025 -0.621727,0.49025 -0.1611441,-0.77519 -0.79139678,-0.0241 0.37483979,-0.69741 -0.59076328,-0.52715 0.73543197,-0.2933 -0.11370504,-0.78356 0.75190744,0.24804 0.416557,-0.67333 0.4165569,0.67333 0.7519075,-0.24804 -0.1137051,0.78356 0.735432,0.2933 -0.5907633,0.52715 z"
-       inkscape:transform-center-x="0.06028767"
-       inkscape:transform-center-y="0.030212626" />
+       style="fill:#cf00f8;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 0.99910255,294.74397 1.11756415,-1.93568 1.1175641,1.93568 z"
+       id="path824"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path826"
+       d="m 3.2342308,295.01546 -1.1175641,1.93568 -1.11756415,-1.93568 z"
+       style="fill:#cf00f8;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#00f8c5;fill-opacity:1;stroke:none;stroke-width:0.14845224px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 2.1114031,294.00949 0.5073106,0.87868 -0.501731,0.86902 -0.5023631,-0.87011 z"
+       id="path828"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

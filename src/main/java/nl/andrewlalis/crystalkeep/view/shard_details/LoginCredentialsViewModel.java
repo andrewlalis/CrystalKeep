@@ -9,6 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.keyboard.NativeKeyAdapter;
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsShard> {
 	public LoginCredentialsViewModel(LoginCredentialsShard shard) {
@@ -61,12 +64,21 @@ public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsSh
 			content.putString(shard.getPassword());
 			Clipboard.getSystemClipboard().setContent(content);
 		});
-		var typePasswordButton = new Button("Auto Type");
-		typePasswordButton.setOnAction(event -> {
-			System.out.println("Not yet implemented.");
+
+		var copyBothButton = new Button("Copy Username and Password");
+		copyBothButton.setOnAction(event -> {
+			ClipboardContent content = new ClipboardContent();
+			content.putString(shard.getUsername());
+			final Clipboard c = Clipboard.getSystemClipboard();
+			c.setContent(content);
+			var t = new Thread(() -> {
+				while (c.getString().equals(shard.getUsername())) {
+					System.out.println("User hasn't pasted yet");
+				}
+			});
 		});
-		typePasswordButton.setDisable(true);
-		passwordActionsPane.getChildren().addAll(showPasswordCheckbox, copyPasswordButton, typePasswordButton);
+
+		passwordActionsPane.getChildren().addAll(showPasswordCheckbox, copyPasswordButton);
 
 		gp.add(passwordActionsPane, 1, 2);
 		return gp;

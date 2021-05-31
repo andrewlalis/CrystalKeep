@@ -34,11 +34,6 @@ public class TextShard extends Shard {
 		return super.toString() + ", text=\"" + this.text + "\"";
 	}
 
-	@Override
-	public String getIconPath() {
-		return "/nl/andrewlalis/crystalkeep/ui/images/text_shard_node_icon.png";
-	}
-
 	public static class Serializer implements ShardSerializer<TextShard> {
 		@Override
 		public byte[] serialize(TextShard shard) throws IOException {

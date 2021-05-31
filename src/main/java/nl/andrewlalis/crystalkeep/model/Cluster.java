@@ -93,9 +93,4 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 		}
 		return sb.toString();
 	}
-
-	@Override
-	public String getIconPath() {
-		return "/nl/andrewlalis/crystalkeep/ui/images/cluster_node_icon.png";
-	}
 }
