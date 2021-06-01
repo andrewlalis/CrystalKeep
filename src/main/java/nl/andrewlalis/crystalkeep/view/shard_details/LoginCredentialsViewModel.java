@@ -74,4 +74,9 @@ public class LoginCredentialsViewModel extends ShardViewModel<LoginCredentialsSh
 		gp.add(passwordActionsPane, 1, 2);
 		return gp;
 	}
+
+	@Override
+	public String getIconPath() {
+		return "/nl/andrewlalis/crystalkeep/ui/images/login_credentials_shard_node_icon.png";
+	}
 }

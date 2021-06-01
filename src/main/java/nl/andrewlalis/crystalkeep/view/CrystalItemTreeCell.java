@@ -23,7 +23,6 @@ public class CrystalItemTreeCell extends TreeCell<CrystalItem> {
 		this.model = model;
 	}
 
-
 	@Override
 	protected void updateItem(CrystalItem item, boolean empty) {
 		super.updateItem(item, empty);

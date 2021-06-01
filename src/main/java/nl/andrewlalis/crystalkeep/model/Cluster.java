@@ -7,6 +7,8 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 	private final Set<Shard> shards;
 	private final Set<Cluster> clusters;
 
+	private Cluster parent;
+
 	public Cluster(String name, Set<Shard> shards, Set<Cluster> clusters) {
 		this.name = name;
 		this.shards = shards;
@@ -36,18 +38,22 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 
 	public void addShard(Shard shard) {
 		this.shards.add(shard);
+		shard.setParent(this);
 	}
 
 	public void removeShard(Shard shard) {
 		this.shards.remove(shard);
+		shard.setParent(null);
 	}
 
 	public void addCluster(Cluster cluster) {
 		this.clusters.add(cluster);
+		cluster.setParent(this);
 	}
 
 	public void removeCluster(Cluster cluster) {
 		this.clusters.remove(cluster);
+		cluster.setParent(null);
 	}
 
 	public List<Cluster> getClustersOrdered() {
@@ -60,6 +66,14 @@ public class Cluster implements Comparable<Cluster>, CrystalItem {
 		List<Shard> shards = new ArrayList<>(this.getShards());
 		shards.sort(Comparator.naturalOrder());
 		return shards;
+	}
+
+	public Cluster getParent() {
+		return parent;
+	}
+
+	public void setParent(Cluster parent) {
+		this.parent = parent;
 	}
 
 	@Override

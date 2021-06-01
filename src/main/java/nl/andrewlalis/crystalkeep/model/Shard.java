@@ -17,10 +17,16 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 	private final LocalDateTime createdAt;
 	private final ShardType type;
 
+	private Cluster parent;
+
 	public Shard(String name, LocalDateTime createdAt, ShardType type) {
 		this.name = name;
 		this.createdAt = createdAt;
 		this.type = type;
+	}
+
+	public Shard(String name, ShardType type) {
+		this(name, LocalDateTime.now(), type);
 	}
 
 	@Override
@@ -38,6 +44,14 @@ public abstract class Shard implements Comparable<Shard>, CrystalItem {
 
 	public ShardType getType() {
 		return type;
+	}
+
+	public Cluster getParent() {
+		return parent;
+	}
+
+	public void setParent(Cluster parent) {
+		this.parent = parent;
 	}
 
 	@Override

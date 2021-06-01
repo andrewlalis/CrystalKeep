@@ -18,4 +18,9 @@ public class TextShardViewModel extends ShardViewModel<TextShard> {
 		});
 		return textArea;
 	}
+
+	@Override
+	public String getIconPath() {
+		return "/nl/andrewlalis/crystalkeep/ui/images/text_shard_node_icon.png";
+	}
 }

@@ -1,20 +1,17 @@
 package nl.andrewlalis.crystalkeep.control;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Model;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.model.ShardType;
+import nl.andrewlalis.crystalkeep.model.shards.FileShard;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class AddShardHandler implements EventHandler<ActionEvent> {
 	private final Cluster cluster;
@@ -27,30 +24,44 @@ public class AddShardHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		Dialog<String> d = new TextInputDialog();
-		d.setContentText("Enter the name of the new shard.");
-		d.showAndWait().ifPresent(s -> {
-			List<String> choices = Arrays.stream(ShardType.values())
-					.map(Enum::name)
-					.collect(Collectors.toList());
-			Dialog<String> d1 = new ChoiceDialog<>("TEXT", choices);
-			d1.setContentText("Choose the type of shard to create.");
-			d1.showAndWait().ifPresent(typeName -> {
-				ShardType type = ShardType.valueOf(typeName.toUpperCase());
-				Shard shard;
+		Dialog<Shard> dialog = new Dialog<>();
+		dialog.setTitle("Create Shard");
+
+		GridPane gp = new GridPane();
+		gp.setHgap(5);
+		gp.setVgap(5);
+		gp.add(new Label("Name"), 0, 0);
+		TextField nameField = new TextField();
+		gp.add(nameField, 1, 0);
+		gp.add(new Label("Type"), 0, 1);
+		ComboBox<ShardType> typeBox = new ComboBox<>(FXCollections.observableArrayList(ShardType.values()));
+		gp.add(typeBox, 1, 1);
+		dialog.getDialogPane().setContent(gp);
+
+		dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+		dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+		dialog.setResultConverter(result -> {
+			if (result == ButtonType.OK) {
+				ShardType type = typeBox.getValue();
+				if (type == null) {
+					return null;
+				};
+				String name = nameField.getText().trim();
+				if (name.isBlank()) {
+					return null;
+				};
 				switch (type) {
-					case TEXT:
-						shard = new TextShard(s);
-						break;
-					case LOGIN_CREDENTIALS:
-						shard = new LoginCredentialsShard(s);
-						break;
-					default:
-						throw new IllegalStateException("Invalid shard type selected.");
+					case TEXT: return new TextShard(name);
+					case LOGIN_CREDENTIALS: return new LoginCredentialsShard(name);
+					case FILE: return new FileShard(name, "", "", new byte[0]);
+					default: return null;
 				}
-				cluster.addShard(shard);
-				model.notifyListeners();
-			});
+			}
+			return null;
+		});
+		dialog.showAndWait().ifPresent(shard -> {
+			cluster.addShard(shard);
+			model.notifyListeners();
 		});
 	}
 }
