@@ -40,7 +40,7 @@ public class CrystalItemTreeCell extends TreeCell<CrystalItem> {
 
 			if (this.getTreeItem().getParent() != null && this.getTreeItem().getParent() instanceof ClusterTreeItem) {
 				var deleteItem = new MenuItem("Delete");
-				deleteItem.setOnAction(new DeleteItemHandler(this.getTreeItem(), this.model));
+				deleteItem.setOnAction(new DeleteItemHandler(this.getTreeItem()));
 				menu.getItems().add(deleteItem);
 			}
 			this.setText(item.getName());

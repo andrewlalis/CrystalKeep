@@ -43,7 +43,7 @@ public class MainViewController implements ModelListener {
 	}
 
 	private TreeItem<CrystalItem> createNode(Cluster cluster) {
-		ClusterTreeItem node = new ClusterTreeItem(cluster);
+		ClusterTreeItem node = new ClusterTreeItem(cluster, this.clusterTreeView);
 		node.setExpanded(true);
 		for (Cluster child : cluster.getClustersOrdered()) {
 			node.getChildren().add(this.createNode(child));

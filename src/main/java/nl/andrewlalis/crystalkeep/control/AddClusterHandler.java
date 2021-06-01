@@ -23,9 +23,6 @@ public class AddClusterHandler implements EventHandler<ActionEvent> {
 		d.setHeaderText(null);
 		d.setTitle("Add Cluster");
 		d.setGraphic(null);
-		d.showAndWait().ifPresent(s -> {
-			cluster.addCluster(new Cluster(s.trim()));
-			model.notifyListeners();
-		});
+		d.showAndWait().ifPresent(s -> cluster.addCluster(new Cluster(s.trim())));
 	}
 }

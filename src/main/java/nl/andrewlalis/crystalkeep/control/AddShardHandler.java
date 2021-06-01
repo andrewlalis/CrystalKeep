@@ -59,9 +59,6 @@ public class AddShardHandler implements EventHandler<ActionEvent> {
 			}
 			return null;
 		});
-		dialog.showAndWait().ifPresent(shard -> {
-			cluster.addShard(shard);
-			model.notifyListeners();
-		});
+		dialog.showAndWait().ifPresent(cluster::addShard);
 	}
 }
