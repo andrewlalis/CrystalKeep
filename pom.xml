@@ -86,11 +86,6 @@
 			<artifactId>controlsfx</artifactId>
 			<version>11.1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.1stleg</groupId>
-			<artifactId>jnativehook</artifactId>
-			<version>2.1.0</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
