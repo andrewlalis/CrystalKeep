@@ -58,7 +58,6 @@ public class ClusterIO {
 	public Cluster load(Path path, char[] password) throws Exception {
 		try (var is = Files.newInputStream(path)) {
 			int version = ByteUtils.readInt(is);
-			System.out.println("File version: " + version);
 			if (version < FILE_VERSION) {
 				System.err.println("Warning! Reading older file version: " + version);
 			}
@@ -126,6 +125,9 @@ public class ClusterIO {
 	public Cluster loadUnencrypted(Path path) throws IOException {
 		try (var is = Files.newInputStream(path)) {
 			int version = ByteUtils.readInt(is);
+			if (version < FILE_VERSION) {
+				System.err.println("Warning! Reading older file version: " + version);
+			}
 			int encryptionFlag = is.read();
 			if (encryptionFlag == 1) throw new IOException("File is encrypted.");
 			return ClusterSerializer.readCluster(is);
