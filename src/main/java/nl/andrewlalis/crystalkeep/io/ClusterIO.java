@@ -1,5 +1,6 @@
 package nl.andrewlalis.crystalkeep.io;
 
+import nl.andrewlalis.crystalkeep.io.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.io.serialization.ClusterSerializer;
 import nl.andrewlalis.crystalkeep.model.Cluster;
 
@@ -33,6 +34,7 @@ import java.security.spec.KeySpec;
  */
 public class ClusterIO {
 	public static final Path CLUSTER_PATH = Path.of("clusters");
+	public static final int FILE_VERSION = 1;
 
 	private final SecureRandom random;
 
@@ -53,14 +55,19 @@ public class ClusterIO {
 	 * @throws Exception If the file could not be found, or could not be
 	 * decrypted and read properly.
 	 */
-	public Cluster load(Path path, String password) throws Exception {
+	public Cluster load(Path path, char[] password) throws Exception {
 		try (var is = Files.newInputStream(path)) {
+			int version = ByteUtils.readInt(is);
+			System.out.println("File version: " + version);
+			if (version < FILE_VERSION) {
+				System.err.println("Warning! Reading older file version: " + version);
+			}
 			int encryptionFlag = is.read();
 			if (encryptionFlag == 0) throw new IOException("File is not encrypted.");
 			byte[] salt = is.readNBytes(8);
 			byte[] iv = is.readNBytes(16);
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, this.getSecretKey(password.toCharArray(), salt), new IvParameterSpec(iv));
+			cipher.init(Cipher.DECRYPT_MODE, this.getSecretKey(password, salt), new IvParameterSpec(iv));
 			try (CipherInputStream cis = new CipherInputStream(is, cipher)) {
 				return ClusterSerializer.readCluster(cis);
 			}
@@ -76,15 +83,16 @@ public class ClusterIO {
 	 * @throws IOException If an error occurs when writing the file.
 	 * @throws GeneralSecurityException If we could not obtain a secret key.
 	 */
-	public void save(Cluster cluster, Path path, String password) throws IOException, GeneralSecurityException {
+	public void save(Cluster cluster, Path path, char[] password) throws IOException, GeneralSecurityException {
 		Files.createDirectories(path.getParent());
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		byte[] iv = new byte[16];
 		this.random.nextBytes(iv);
 		byte[] salt = new byte[8];
 		this.random.nextBytes(salt);
-		cipher.init(Cipher.ENCRYPT_MODE, this.getSecretKey(password.toCharArray(), salt), new IvParameterSpec(iv));
+		cipher.init(Cipher.ENCRYPT_MODE, this.getSecretKey(password, salt), new IvParameterSpec(iv));
 		try (OutputStream fos = Files.newOutputStream(path)) {
+			ByteUtils.writeInt(fos, FILE_VERSION);
 			fos.write(1);
 			fos.write(salt);
 			fos.write(iv);
@@ -103,6 +111,7 @@ public class ClusterIO {
 	public void saveUnencrypted(Cluster cluster, Path path) throws IOException {
 		Files.createDirectories(path.getParent());
 		try (var os = Files.newOutputStream(path)) {
+			ByteUtils.writeInt(os, FILE_VERSION);
 			os.write(0);
 			ClusterSerializer.writeCluster(cluster, os);
 		}
@@ -116,6 +125,7 @@ public class ClusterIO {
 	 */
 	public Cluster loadUnencrypted(Path path) throws IOException {
 		try (var is = Files.newInputStream(path)) {
+			int version = ByteUtils.readInt(is);
 			int encryptionFlag = is.read();
 			if (encryptionFlag == 1) throw new IOException("File is encrypted.");
 			return ClusterSerializer.readCluster(is);

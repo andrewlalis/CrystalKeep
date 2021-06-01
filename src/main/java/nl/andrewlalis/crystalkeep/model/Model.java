@@ -8,6 +8,7 @@ import java.util.Set;
 public class Model {
 	private Cluster activeCluster;
 	private Path activeClusterPath;
+	private char[] activeClusterPassword;
 
 	private final Set<ModelListener> listeners =  new HashSet<>();
 
@@ -30,6 +31,14 @@ public class Model {
 
 	public void setActiveClusterPath(Path activeClusterPath) {
 		this.activeClusterPath = activeClusterPath;
+	}
+
+	public char[] getActiveClusterPassword() {
+		return activeClusterPassword;
+	}
+
+	public void setActiveClusterPassword(char[] activeClusterPassword) {
+		this.activeClusterPassword = activeClusterPassword;
 	}
 
 	public void notifyListeners() {

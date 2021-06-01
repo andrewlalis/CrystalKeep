@@ -17,6 +17,14 @@ public class ByteUtils {
 		return ByteBuffer.wrap(bytes).getInt();
 	}
 
+	public static int readInt(InputStream is) throws IOException {
+		return toInt(is.readNBytes(4));
+	}
+
+	public static void writeInt(OutputStream os, int value) throws IOException {
+		os.write(toBytes(value));
+	}
+
 	public static void writeLengthPrefixed(byte[] bytes, OutputStream os) throws IOException {
 		os.write(toBytes(bytes.length));
 		os.write(bytes);

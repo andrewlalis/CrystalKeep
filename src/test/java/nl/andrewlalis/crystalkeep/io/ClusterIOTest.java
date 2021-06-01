@@ -49,7 +49,7 @@ public class ClusterIOTest {
 		Cluster loaded = io.loadUnencrypted(file);
 		assertEquals(cluster, loaded);
 		// Test attempting to load an encrypted file, which throws an IOException.
-		io.save(cluster, file, "testpass");
+		io.save(cluster, file, "testpass".toCharArray());
 		assertThrows(IOException.class, () -> io.loadUnencrypted(file));
 	}
 
@@ -59,14 +59,14 @@ public class ClusterIOTest {
 		Path file = Files.createTempFile(UUID.randomUUID().toString(), "cts");
 		var io = new ClusterIO();
 		// Test normal save and load.
-		io.save(cluster, file, "test");
-		Cluster loaded = io.load(file, "test");
+		io.save(cluster, file, "test".toCharArray());
+		Cluster loaded = io.load(file, "test".toCharArray());
 		assertEquals(cluster, loaded);
 		// Test attempting to load an unencrypted file, which throws an IOException.
 		io.saveUnencrypted(cluster, file);
-		assertThrows(IOException.class, () -> io.load(file, "test"));
+		assertThrows(IOException.class, () -> io.load(file, "test".toCharArray()));
 		// Test attempting to load an encrypted file with the wrong password. An exception is thrown when reading it.
-		io.save(cluster, file, "other");
-		assertThrows(Exception.class, () -> io.load(file, "not_password"));
+		io.save(cluster, file, "other".toCharArray());
+		assertThrows(Exception.class, () -> io.load(file, "not_password".toCharArray()));
 	}
 }

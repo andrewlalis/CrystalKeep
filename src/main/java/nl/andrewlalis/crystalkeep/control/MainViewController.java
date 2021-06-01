@@ -73,8 +73,11 @@ public class MainViewController implements ModelListener {
 		try {
 			if (password.isEmpty() || password.get().isEmpty()) {
 				cluster = loader.loadUnencrypted(file.toPath());
+				this.model.setActiveClusterPassword(null);
 			} else {
-				cluster = loader.load(file.toPath(), password.get());
+				char[] pw = password.get().toCharArray();
+				cluster = loader.load(file.toPath(), pw);
+				this.model.setActiveClusterPassword(pw);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,12 +102,15 @@ public class MainViewController implements ModelListener {
 			if (file == null) return;
 			path = file.toPath();
 		}
-		var password = this.promptPassword();
+		char[] pw = this.model.getActiveClusterPassword();
+		if (pw == null) {
+			pw = this.promptPassword().orElse("").toCharArray();
+		}
 		try {
-			if (password.isEmpty() || password.get().isEmpty()) {
+			if (pw.length == 0) {
 				loader.saveUnencrypted(model.getActiveCluster(), path);
 			} else {
-				loader.save(model.getActiveCluster(), path, password.get());
+				loader.save(model.getActiveCluster(), path, pw);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
