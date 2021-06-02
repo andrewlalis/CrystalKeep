@@ -71,11 +71,11 @@ public class MainViewController implements ModelListener {
 		var password = this.promptPassword();
 		Cluster cluster;
 		try {
-			if (password.isEmpty() || password.get().isEmpty()) {
+			if (password.isEmpty() || password.get().length == 0) {
 				cluster = loader.loadUnencrypted(file.toPath());
 				this.model.setActiveClusterPassword(null);
 			} else {
-				char[] pw = password.get().toCharArray();
+				char[] pw = password.get();
 				cluster = loader.load(file.toPath(), pw);
 				this.model.setActiveClusterPassword(pw);
 			}
@@ -104,7 +104,7 @@ public class MainViewController implements ModelListener {
 		}
 		char[] pw = this.model.getActiveClusterPassword();
 		if (pw == null) {
-			pw = this.promptPassword().orElse("").toCharArray();
+			pw = this.promptPassword().orElse(new char[0]);
 		}
 		try {
 			if (pw.length == 0) {
@@ -120,14 +120,45 @@ public class MainViewController implements ModelListener {
 	}
 
 	@FXML
+	public void saveAs() {
+		if (model.getActiveCluster() == null) return;
+		ClusterIO clusterIO = new ClusterIO();
+		Path path = model.getActiveClusterPath();
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Save Cluster");
+		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
+		if (path != null) {
+			chooser.setInitialDirectory(path.getParent().toFile());
+		}
+		File file = chooser.showSaveDialog(this.clusterTreeView.getScene().getWindow());
+		if (file == null) return;
+		path = file.toPath();
+		char[] pw = this.model.getActiveClusterPassword();
+		if (pw == null) {
+			pw = this.promptPassword().orElse(new char[0]);
+		}
+		try {
+			if (pw.length == 0) {
+				clusterIO.saveUnencrypted(model.getActiveCluster(), path);
+			} else {
+				clusterIO.save(model.getActiveCluster(), path, pw);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
 	public void newCluster() {
 		Cluster c = new Cluster("Root");
 		model.setActiveCluster(c);
 		model.setActiveClusterPath(null);
 	}
 
-	private Optional<String> promptPassword() {
-		Dialog<String> d = new Dialog<>();
+	private Optional<char[]> promptPassword() {
+		Dialog<char[]> d = new Dialog<>();
 		d.setTitle("Enter Password");
 		d.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
@@ -138,7 +169,7 @@ public class MainViewController implements ModelListener {
 		d.getDialogPane().setContent(content);
 		d.setResultConverter(param -> {
 			if (param == ButtonType.OK) {
-				return pwField.getText();
+				return pwField.getText().toCharArray();
 			}
 			return null;
 		});
