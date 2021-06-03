@@ -6,11 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import nl.andrewlalis.crystalkeep.io.ClusterIO;
 import nl.andrewlalis.crystalkeep.model.*;
 import nl.andrewlalis.crystalkeep.view.ClusterTreeItem;
 import nl.andrewlalis.crystalkeep.view.CrystalItemTreeCell;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
+import org.controlsfx.control.Notifications;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -82,8 +84,11 @@ public class MainViewController implements ModelListener {
 				this.model.setActiveClusterPassword(pw);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			new Alert(Alert.AlertType.WARNING, "Could not load cluster.").showAndWait();
+			Notifications.create()
+				.text("Could not load cluster. Check that your password is correct.")
+				.hideAfter(Duration.seconds(3))
+				.owner(this.shardDetailContainer.getScene().getWindow())
+				.show();
 			return;
 		}
 		model.setActiveCluster(cluster);
@@ -115,6 +120,8 @@ public class MainViewController implements ModelListener {
 		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Cluster Files", "cts"));
 		if (path != null) {
 			chooser.setInitialDirectory(path.getParent().toFile());
+		} else {
+			chooser.setInitialDirectory(ClusterIO.CLUSTER_PATH.toFile());
 		}
 		File file = chooser.showSaveDialog(this.clusterTreeView.getScene().getWindow());
 		if (file == null) return;
@@ -154,16 +161,27 @@ public class MainViewController implements ModelListener {
 			pw = this.promptPassword().orElse(new char[0]);
 		}
 		ClusterIO loader = new ClusterIO();
+		if (!path.getFileName().toString().trim().toLowerCase().endsWith(".cts")) {
+			path = path.resolveSibling(path.getFileName() + ".cts");
+		}
 		try {
 			if (pw.length == 0) {
 				loader.saveUnencrypted(model.getActiveCluster(), path);
 			} else {
 				loader.save(model.getActiveCluster(), path, pw);
 			}
+			Notifications.create()
+				.text("Cluster saved to " + path)
+				.hideAfter(Duration.seconds(3))
+				.owner(this.shardDetailContainer.getScene().getWindow())
+				.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
-			alert.showAndWait();
+			Notifications.create()
+				.text("Could not save cluster.")
+				.hideAfter(Duration.seconds(3))
+				.owner(this.shardDetailContainer.getScene().getWindow())
+				.show();
 		}
 	}
 }

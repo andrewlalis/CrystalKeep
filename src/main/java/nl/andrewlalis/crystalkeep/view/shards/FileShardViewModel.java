@@ -74,12 +74,18 @@ public class FileShardViewModel extends ShardViewModel<FileShard> {
 		gp.add(extractFileButton, 1, 2);
 		container.getChildren().add(gp);
 
-		if (StringUtils.endsWithAny(shard.getFileName().toLowerCase(), ".png", ".jpg", ".jpeg", ".gif")) {
+		if (StringUtils.endsWithAny(shard.getFileName().toLowerCase(), StringUtils.IMAGE_TYPES)) {
 			container.getChildren().add(new Separator(Orientation.HORIZONTAL));
 			ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(shard.getContents())));
 			imageView.setPreserveRatio(true);
 			ScrollPane scrollPane = new ScrollPane(imageView);
 			container.getChildren().add(scrollPane);
+		} else if (StringUtils.endsWithAny(shard.getFileName().toLowerCase(), StringUtils.PLAIN_TEXT_TYPES)) {
+			container.getChildren().add(new Separator(Orientation.HORIZONTAL));
+			TextArea textArea = new TextArea(new String(shard.getContents()));
+			textArea.setEditable(false);
+			textArea.setWrapText(true);
+			container.getChildren().add(textArea);
 		}
 
 		return container;

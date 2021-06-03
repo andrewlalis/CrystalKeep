@@ -33,8 +33,15 @@ import java.security.spec.KeySpec;
  * @see nl.andrewlalis.crystalkeep.io.serialization.ClusterSerializer
  */
 public class ClusterIO {
-	public static final Path CLUSTER_PATH = Path.of("clusters");
+	public static final Path CLUSTER_PATH = Path.of(System.getProperty("user.home"), ".crystalkeep", "clusters");
 	public static final int FILE_VERSION = 1;
+	static {
+		try {
+			Files.createDirectories(CLUSTER_PATH);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private final SecureRandom random;
 
