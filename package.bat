@@ -1,11 +1,13 @@
 call mvn clean package
 call jpackage ^
-    --type app-image ^
+    --type msi ^
     --verbose ^
     --dest target\image ^
     --name CrystalKeep ^
-    --icon src/main/resources/nl/andrewlalis/crystalkeep/ui/images/cluster_node_icon.png ^
+    --icon cluster_node_icon.ico ^
     --module crystalkeep/nl.andrewlalis.crystalkeep.CrystalKeep ^
     --module-path target\modules ^
     --module-path target\classes ^
-    --win-console ^
+    --win-menu ^
+    --win-per-user-install ^
+    --win-shortcut ^
