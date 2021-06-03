@@ -2,8 +2,9 @@ package nl.andrewlalis.crystalkeep.io.serialization;
 
 import nl.andrewlalis.crystalkeep.model.Cluster;
 import nl.andrewlalis.crystalkeep.model.Shard;
-import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.ShardType;
+import nl.andrewlalis.crystalkeep.model.shards.FileShard;
+import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ClusterSerializer {
 	static {
 		serializers.put(ShardType.TEXT, new TextShard.Serializer());
 		serializers.put(ShardType.LOGIN_CREDENTIALS, new LoginCredentialsShard.Serializer());
+		serializers.put(ShardType.FILE, new FileShard.Serializer());
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class ClusterSerializer {
 		ByteUtils.writeLengthPrefixed(shard.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).getBytes(StandardCharsets.UTF_8), os);
 		os.write(ByteUtils.toBytes(shard.getType().getValue()));
 		ShardSerializer serializer = serializers.get(shard.getType());
-		os.write(serializer.serialize(shard));
+		serializer.serialize(shard, os);
 	}
 
 	/**

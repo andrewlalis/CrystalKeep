@@ -1,6 +1,5 @@
 package nl.andrewlalis.crystalkeep.io.serialization;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,6 +24,32 @@ public class ByteUtils {
 		os.write(toBytes(value));
 	}
 
+	public static byte[] longToBytes(long l) {
+		byte[] result = new byte[8];
+		for (int i = 7; i >= 0; i--) {
+			result[i] = (byte)(l & 0xFF);
+			l >>= 8;
+		}
+		return result;
+	}
+
+	public static long bytesToLong(final byte[] b) {
+		long result = 0;
+		for (int i = 0; i < 8; i++) {
+			result <<= 8;
+			result |= (b[i] & 0xFF);
+		}
+		return result;
+	}
+
+	public static void writeLong(long value, OutputStream os) throws IOException {
+		os.write(longToBytes(value));
+	}
+
+	public static long readLong(InputStream is) throws IOException {
+		return bytesToLong(is.readNBytes(Long.BYTES));
+	}
+
 	public static void writeLengthPrefixed(byte[] bytes, OutputStream os) throws IOException {
 		os.write(toBytes(bytes.length));
 		os.write(bytes);
@@ -34,12 +59,10 @@ public class ByteUtils {
 		writeLengthPrefixed(s.getBytes(StandardCharsets.UTF_8), os);
 	}
 
-	public static byte[] writeLengthPrefixedStrings(String[] strings) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	public static void writeLengthPrefixedStrings(String[] strings, OutputStream os) throws IOException {
 		for (String s : strings) {
-			writeLengthPrefixed(s, bos);
+			writeLengthPrefixed(s, os);
 		}
-		return bos.toByteArray();
 	}
 
 	public static byte[] readLengthPrefixed(InputStream is) throws IOException {

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.andrewlalis.crystalkeep.control.MainViewController">
    <MenuBar>
-      <Menu text="File">
+      <Menu fx:id="fileMenu" text="File">
          <MenuItem text="New" onAction="#newCluster" />
          <MenuItem text="Load" onAction="#load" />
          <MenuItem text="Save" onAction="#save" />

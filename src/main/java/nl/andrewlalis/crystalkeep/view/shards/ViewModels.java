@@ -1,6 +1,7 @@
-package nl.andrewlalis.crystalkeep.view.shard_details;
+package nl.andrewlalis.crystalkeep.view.shards;
 
 import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.shards.FileShard;
 import nl.andrewlalis.crystalkeep.model.shards.LoginCredentialsShard;
 import nl.andrewlalis.crystalkeep.model.shards.TextShard;
 
@@ -17,6 +18,7 @@ public class ViewModels {
 	static {
 		shardViewModels.put(TextShard.class, TextShardViewModel.class);
 		shardViewModels.put(LoginCredentialsShard.class, LoginCredentialsViewModel.class);
+		shardViewModels.put(FileShard.class, FileShardViewModel.class);
 	}
 
 	public static Optional<ShardViewModel<?>> get(Shard shard) {

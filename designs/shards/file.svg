@@ -15,8 +15,8 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="shard_node_icon.svg"
-   inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\nl\andrewlalis\crystalkeep\ui\images\shard_node_icon.png"
+   sodipodi:docname="file.svg"
+   inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\nl\andrewlalis\crystalkeep\ui\images\file_shard_node_icon.png"
    inkscape:export-xdpi="1536"
    inkscape:export-ydpi="1536">
   <defs
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="44.8"
-     inkscape:cx="8.5805581"
-     inkscape:cy="7.3490264"
+     inkscape:zoom="32"
+     inkscape:cx="10.333173"
+     inkscape:cy="9.4475152"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -59,10 +59,20 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-292.76667)">
-    <path
-       style="fill:#00f8c5;stroke:none;stroke-width:0.26458333;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1"
-       d="m 2.1143043,292.83045 1.1824699,2.0481 -1.1824699,2.0481 -1.18246994,-2.0481 1.18246994,-2.0481"
-       id="path820"
-       inkscape:connector-curvature="0" />
+    <g
+       id="g832"
+       transform="matrix(2.2606665,0,0,2.2606665,-2.7169913,-371.69624)">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path826"
+         d="m 2.4538923,294.00575 v 0.19782 H 2.664343 Z"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.01322917;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path824"
+         d="m 1.6119693,295.71377 v -1.70802 h 0.841923 v 0.19782 H 2.664343 v 1.5102 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.02645833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
   </g>
 </svg>

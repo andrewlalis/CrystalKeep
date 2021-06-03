@@ -53,7 +53,7 @@ public class AddShardHandler implements EventHandler<ActionEvent> {
 				switch (type) {
 					case TEXT: return new TextShard(name);
 					case LOGIN_CREDENTIALS: return new LoginCredentialsShard(name);
-					case FILE: return new FileShard(name, "", "", new byte[0]);
+					case FILE: return new FileShard(name, "", new byte[0]);
 					default: return null;
 				}
 			}

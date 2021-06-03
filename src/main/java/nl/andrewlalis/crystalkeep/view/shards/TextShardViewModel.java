@@ -1,4 +1,4 @@
-package nl.andrewlalis.crystalkeep.view.shard_details;
+package nl.andrewlalis.crystalkeep.view.shards;
 
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;

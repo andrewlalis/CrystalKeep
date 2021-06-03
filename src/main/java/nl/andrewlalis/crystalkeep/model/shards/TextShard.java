@@ -1,12 +1,13 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
-import nl.andrewlalis.crystalkeep.model.Shard;
-import nl.andrewlalis.crystalkeep.model.ShardType;
 import nl.andrewlalis.crystalkeep.io.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.io.serialization.ShardSerializer;
+import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.ShardType;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 
 public class TextShard extends Shard {
@@ -34,10 +35,10 @@ public class TextShard extends Shard {
 		return super.toString() + ", text=\"" + this.text + "\"";
 	}
 
-	public static class Serializer implements ShardSerializer<TextShard> {
+	public static final class Serializer implements ShardSerializer<TextShard> {
 		@Override
-		public byte[] serialize(TextShard shard) throws IOException {
-			return ByteUtils.writeLengthPrefixedStrings(new String[]{shard.getText()});
+		public void serialize(TextShard shard, OutputStream os) throws IOException {
+			ByteUtils.writeLengthPrefixedStrings(new String[]{shard.getText()}, os);
 		}
 
 		@Override

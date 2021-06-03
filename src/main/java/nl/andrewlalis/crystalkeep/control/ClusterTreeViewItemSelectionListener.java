@@ -6,7 +6,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.VBox;
 import nl.andrewlalis.crystalkeep.model.CrystalItem;
 import nl.andrewlalis.crystalkeep.view.ShardTreeItem;
-import nl.andrewlalis.crystalkeep.view.shard_details.ViewModels;
+import nl.andrewlalis.crystalkeep.view.shards.ViewModels;
 
 /**
  * This listener will update the shard detail container pane (the main center

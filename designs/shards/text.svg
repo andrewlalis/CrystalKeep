@@ -15,10 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="text_shard_node_icon.svg"
+   sodipodi:docname="text.svg"
    inkscape:export-filename="A:\Programming\GitHub-andrewlalis\CrystalKeep\src\main\resources\nl\andrewlalis\crystalkeep\ui\images\text_shard_node_icon.png"
-   inkscape:export-xdpi="192"
-   inkscape:export-ydpi="192">
+   inkscape:export-xdpi="1536"
+   inkscape:export-ydpi="1536">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="44.8"
-     inkscape:cx="8.2633984"
-     inkscape:cy="6.8552682"
+     inkscape:cx="5.8060872"
+     inkscape:cy="8.9176258"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,7 +39,9 @@
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     units="px" />
+     units="px"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -57,33 +59,16 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-292.76667)">
-    <path
-       sodipodi:type="star"
-       style="fill:#72deff;fill-opacity:1;stroke:none;stroke-width:0.07803907;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path817"
-       sodipodi:sides="9"
-       sodipodi:cx="2.1166666"
-       sodipodi:cy="294.93815"
-       sodipodi:r1="1.8178079"
-       sodipodi:r2="1.2179312"
-       sodipodi:arg1="0.52359878"
-       sodipodi:arg2="0.87266463"
-       inkscape:flatsided="false"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 3.6909344,295.84704 -0.7913968,0.0241 -0.1611441,0.77519 -0.6217269,-0.49025 -0.621727,0.49025 -0.1611441,-0.77519 -0.79139678,-0.0241 0.37483979,-0.69741 -0.59076328,-0.52715 0.73543197,-0.2933 -0.11370504,-0.78356 0.75190744,0.24804 0.416557,-0.67333 0.4165569,0.67333 0.7519075,-0.24804 -0.1137051,0.78356 0.735432,0.2933 -0.5907633,0.52715 z"
-       inkscape:transform-center-x="0.06028767"
-       inkscape:transform-center-y="0.030212626" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:1.9992249px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.12495156"
-       x="1.4333378"
-       y="295.61206"
-       id="text818"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.69617891px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.35601118"
+       x="0.36164278"
+       y="296.76907"
+       id="text817"><tspan
          sodipodi:role="line"
-         id="tspan816"
-         x="1.4333378"
-         y="295.61206"
-         style="stroke-width:0.12495156">A</tspan></text>
+         id="tspan815"
+         x="0.36164278"
+         y="296.76907"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.69617891px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.35601118">T</tspan></text>
   </g>
 </svg>

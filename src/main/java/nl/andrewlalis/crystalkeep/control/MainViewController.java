@@ -23,6 +23,8 @@ public class MainViewController implements ModelListener {
 	public TreeView<CrystalItem> clusterTreeView;
 	@FXML
 	public VBox shardDetailContainer;
+	@FXML
+	public Menu fileMenu;
 
 	public void init(Model model) {
 		this.model = model;
@@ -91,7 +93,6 @@ public class MainViewController implements ModelListener {
 	@FXML
 	public void save() {
 		if (model.getActiveCluster() == null) return;
-		ClusterIO loader = new ClusterIO();
 		Path path = model.getActiveClusterPath();
 		if (path == null) {
 			FileChooser chooser = new FileChooser();
@@ -102,27 +103,12 @@ public class MainViewController implements ModelListener {
 			if (file == null) return;
 			path = file.toPath();
 		}
-		char[] pw = this.model.getActiveClusterPassword();
-		if (pw == null) {
-			pw = this.promptPassword().orElse(new char[0]);
-		}
-		try {
-			if (pw.length == 0) {
-				loader.saveUnencrypted(model.getActiveCluster(), path);
-			} else {
-				loader.save(model.getActiveCluster(), path, pw);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
-			alert.showAndWait();
-		}
+		this.saveCluster(path);
 	}
 
 	@FXML
 	public void saveAs() {
 		if (model.getActiveCluster() == null) return;
-		ClusterIO clusterIO = new ClusterIO();
 		Path path = model.getActiveClusterPath();
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Save Cluster");
@@ -133,21 +119,7 @@ public class MainViewController implements ModelListener {
 		File file = chooser.showSaveDialog(this.clusterTreeView.getScene().getWindow());
 		if (file == null) return;
 		path = file.toPath();
-		char[] pw = this.model.getActiveClusterPassword();
-		if (pw == null) {
-			pw = this.promptPassword().orElse(new char[0]);
-		}
-		try {
-			if (pw.length == 0) {
-				clusterIO.saveUnencrypted(model.getActiveCluster(), path);
-			} else {
-				clusterIO.save(model.getActiveCluster(), path, pw);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
-			alert.showAndWait();
-		}
+		this.saveCluster(path);
 	}
 
 	@FXML
@@ -174,5 +146,24 @@ public class MainViewController implements ModelListener {
 			return null;
 		});
 		return d.showAndWait();
+	}
+
+	private void saveCluster(Path path) {
+		char[] pw = this.model.getActiveClusterPassword();
+		if (pw == null) {
+			pw = this.promptPassword().orElse(new char[0]);
+		}
+		ClusterIO loader = new ClusterIO();
+		try {
+			if (pw.length == 0) {
+				loader.saveUnencrypted(model.getActiveCluster(), path);
+			} else {
+				loader.save(model.getActiveCluster(), path, pw);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			var alert = new Alert(Alert.AlertType.ERROR, "Could not save cluster.");
+			alert.showAndWait();
+		}
 	}
 }

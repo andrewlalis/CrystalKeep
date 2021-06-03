@@ -1,12 +1,13 @@
 package nl.andrewlalis.crystalkeep.model.shards;
 
-import nl.andrewlalis.crystalkeep.model.Shard;
-import nl.andrewlalis.crystalkeep.model.ShardType;
 import nl.andrewlalis.crystalkeep.io.serialization.ByteUtils;
 import nl.andrewlalis.crystalkeep.io.serialization.ShardSerializer;
+import nl.andrewlalis.crystalkeep.model.Shard;
+import nl.andrewlalis.crystalkeep.model.ShardType;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 
 public class LoginCredentialsShard extends Shard {
@@ -44,11 +45,11 @@ public class LoginCredentialsShard extends Shard {
 		return super.toString() + ", username=\"" + this.username + "\", password=\"" + this.password + "\"";
 	}
 
-	public static class Serializer implements ShardSerializer<LoginCredentialsShard> {
+	public static final class Serializer implements ShardSerializer<LoginCredentialsShard> {
 
 		@Override
-		public byte[] serialize(LoginCredentialsShard shard) throws IOException {
-			return ByteUtils.writeLengthPrefixedStrings(new String[]{shard.getUsername(), shard.getPassword()});
+		public void serialize(LoginCredentialsShard shard, OutputStream os) throws IOException {
+			ByteUtils.writeLengthPrefixedStrings(new String[]{shard.getUsername(), shard.getPassword()}, os);
 		}
 
 		@Override

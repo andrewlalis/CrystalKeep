@@ -12,7 +12,7 @@ import nl.andrewlalis.crystalkeep.model.CrystalItem;
 import nl.andrewlalis.crystalkeep.model.Model;
 import nl.andrewlalis.crystalkeep.model.Shard;
 import nl.andrewlalis.crystalkeep.util.ImageCache;
-import nl.andrewlalis.crystalkeep.view.shard_details.ViewModels;
+import nl.andrewlalis.crystalkeep.view.shards.ViewModels;
 
 public class CrystalItemTreeCell extends TreeCell<CrystalItem> {
 	private static final String CLUSTER_ICON = "/nl/andrewlalis/crystalkeep/ui/images/cluster_node_icon.png";
